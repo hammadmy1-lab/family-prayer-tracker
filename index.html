@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#065f46" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="متابع الصلاة" />
+  <title>متابع صلاة الأسرة — تذكير صوتي ومتابعة يومية</title>
+  <!-- أيقونة بيت الله الحرام (الكعبة المشرفة) للموبايل والمتصفح -->
+  <link id="appFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23059669'/%3E%3Cstop offset='100%25' stop-color='%23022c22'/%3E%3C/linearGradient%3E%3ClinearGradient id='gold' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%23fde047'/%3E%3Cstop offset='50%25' stop-color='%23f59e0b'/%3E%3Cstop offset='100%25' stop-color='%23fef08a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='28' fill='url(%23bg)'/%3E%3Ccircle cx='64' cy='64' r='48' fill='%23fbbf24' fill-opacity='0.12'/%3E%3Cpolygon points='64,26 102,42 64,58 26,42' fill='%2327272a'/%3E%3Cpolygon points='26,42 64,58 64,104 26,88' fill='%2318181b'/%3E%3Cpolygon points='64,58 102,42 102,88 64,104' fill='%2309090b'/%3E%3Cpolygon points='26,50 64,66 64,73 26,57' fill='url(%23gold)'/%3E%3Cpolygon points='64,66 102,50 102,57 64,73' fill='url(%23gold)'/%3E%3Cpolygon points='74,73 86,68 86,93 74,98' fill='url(%23gold)'/%3E%3Cpath d='M36,96 Q64,112 92,96' stroke='%23fde68a' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link id="appleTouchIcon" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23059669'/%3E%3Cstop offset='100%25' stop-color='%23022c22'/%3E%3C/linearGradient%3E%3ClinearGradient id='gold' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%23fde047'/%3E%3Cstop offset='50%25' stop-color='%23f59e0b'/%3E%3Cstop offset='100%25' stop-color='%23fef08a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='28' fill='url(%23bg)'/%3E%3Ccircle cx='64' cy='64' r='48' fill='%23fbbf24' fill-opacity='0.12'/%3E%3Cpolygon points='64,26 102,42 64,58 26,42' fill='%2327272a'/%3E%3Cpolygon points='26,42 64,58 64,104 26,88' fill='%2318181b'/%3E%3Cpolygon points='64,58 102,42 102,88 64,104' fill='%2309090b'/%3E%3Cpolygon points='26,50 64,66 64,73 26,57' fill='url(%23gold)'/%3E%3Cpolygon points='64,66 102,50 102,57 64,73' fill='url(%23gold)'/%3E%3Cpolygon points='74,73 86,68 86,93 74,98' fill='url(%23gold)'/%3E%3Cpath d='M36,96 Q64,112 92,96' stroke='%23fde68a' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="manifest" href="./manifest.json" />
+  <!-- تحميل خط عربي واضح وأنيق (Cairo & Tajawal) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <!-- تحميل Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'Tajawal', 'sans-serif'],
+            body: ['Tajawal', 'Cairo', 'sans-serif']
+          },
+          colors: {
+            emeraldCalm: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b'
+            },
+            goldWarm: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              500: '#f59e0b',
+              600: '#d97706'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* لمسات تصميمية هادئة ومناسبة للموبايل */
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .islamic-pattern {
+      background-image: radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 1px),
+                        radial-gradient(rgba(217, 119, 6, 0.06) 1px, transparent 1px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+    }
+    /* إخفاء شريط التمرير مع الإبقاء على التمرير السلس */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes pulseSoft {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.04); opacity: 0.9; }
+    }
+    .speaking-pulse {
+      animation: pulseSoft 1.4s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 islamic-pattern min-h-screen flex flex-col">
+
+  <!-- شريط التنبيهات المخصص بدلاً من alert() -->
+  <div id="toastContainer" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- الهيدر العلوي المتجاوب -->
+  <header class="sticky top-0 z-30 bg-emerald-800 dark:bg-emerald-950 text-white shadow-md border-b border-emerald-700/60">
+    <div class="max-w-3xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <!-- أيقونة بيت الله الحرام (الكعبة المشرفة) في الهيدر مع إمكانية النقر لتحميلها أو فتح إعداداتها -->
+        <button id="btnHeaderKaabaIcon" type="button" title="أيقونة بيت الله الحرام — اضغط لتحميل الأيقونة"
+          class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-950 border border-amber-300/70 shadow-sm flex items-center justify-center shrink-0 p-1.5 hover:scale-105 transition active:scale-95">
+          <svg viewBox="0 0 128 128" class="w-full h-full" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polygon points="64,20 106,38 64,56 22,38" fill="#27272a"/>
+            <polygon points="22,38 64,56 64,108 22,90" fill="#18181b"/>
+            <polygon points="64,56 106,38 106,90 64,108" fill="#09090b"/>
+            <polygon points="22,47 64,65 64,73 22,55" fill="#fbbf24"/>
+            <polygon points="64,65 106,47 106,55 64,73" fill="#f59e0b"/>
+            <polygon points="75,73 88,68 88,96 75,101" fill="#fde047"/>
+            <path d="M34,100 Q64,116 94,100" stroke="#fde68a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="min-w-0">
+          <h1 class="text-sm sm:text-lg font-extrabold tracking-tight truncate">متابع صلاة الأسرة</h1>
+          <!-- ساعة الموبايل الحية والتاريخ الهجري -->
+          <div class="flex items-center gap-1.5 text-[11px] sm:text-xs text-amber-200 font-bold truncate">
+            <span>🕒</span>
+            <span id="liveMobileClock" dir="ltr" class="font-mono tracking-wider">--:--:--</span>
+            <span class="text-emerald-300">•</span>
+            <span id="liveHijriDate" class="truncate text-emerald-100 font-normal">جاري المزامنة...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- أزرار سريعة في الهيدر -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button id="btnToggleAutoTimer" type="button" title="منبه أوقات الصلاة بتوقيت الموبايل"
+          class="px-2.5 sm:px-3 py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-emerald-900/80 hover:bg-emerald-900 border border-amber-400/40 flex items-center gap-1.5 transition active:scale-95">
+          <span id="autoTimerDot" class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span>
+          <span id="autoTimerLabel">منبه الصلاة: مفعّل</span>
+        </button>
+
+        <button id="btnThemeToggle" type="button" aria-label="تبديل الوضع الليلي"
+          class="p-2 rounded-xl bg-emerald-900/70 hover:bg-emerald-900 border border-emerald-500/40 transition active:scale-95 text-sm">
+          🌙
+        </button>
+      </div>
+    </div>
+
+    <!-- شريط الصلاة القادمة حسب ساعة الموبايل -->
+    <div class="bg-emerald-950/75 border-t border-emerald-700/40 px-3 sm:px-4 py-1.5">
+      <div class="max-w-3xl mx-auto flex items-center justify-between text-[11px] sm:text-xs">
+        <div class="flex items-center gap-1.5 text-emerald-100">
+          <span>🕌</span>
+          <span>الصلاة القادمة بتوقيت الموبايل:</span>
+          <strong id="nextPrayerNameBadge" class="text-amber-300 font-extrabold">--</strong>
+        </div>
+        <div id="nextPrayerCountdownBadge" class="font-bold text-amber-200">
+          متبقي --:--
+        </div>
+      </div>
+    </div>
+
+    <!-- شريط التنقل بين التبويبات الرئيسية -->
+    <nav class="max-w-3xl mx-auto px-2 sm:px-4 pt-1 flex gap-1.5 overflow-x-auto no-scrollbar">
+      <button data-tab="tracker" class="tab-btn flex-1 min-w-[95px] py-2.5 px-3 rounded-t-2xl text-xs sm:text-sm font-bold bg-stone-50 dark:bg-slate-950 text-emerald-800 dark:text-emerald-300 transition flex items-center justify-center gap-1.5">
+        <span>✅</span>
+        <span>المتابعة اليومية</span>
+      </button>
+      <button data-tab="voice" class="tab-btn flex-1 min-w-[95px] py-2.5 px-3 rounded-t-2xl text-xs sm:text-sm font-bold text-emerald-100 hover:bg-emerald-700/60 transition flex items-center justify-center gap-1.5">
+        <span>🔊</span>
+        <span>التذكير الصوتي</span>
+      </button>
+      <button data-tab="report" class="tab-btn flex-1 min-w-[95px] py-2.5 px-3 rounded-t-2xl text-xs sm:text-sm font-bold text-emerald-100 hover:bg-emerald-700/60 transition flex items-center justify-center gap-1.5">
+        <span>📊</span>
+        <span>التقرير والملخص</span>
+      </button>
+      <button data-tab="settings" class="tab-btn flex-1 min-w-[95px] py-2.5 px-3 rounded-t-2xl text-xs sm:text-sm font-bold text-emerald-100 hover:bg-emerald-700/60 transition flex items-center justify-center gap-1.5">
+        <span>⚙️</span>
+        <span>الأبناء والإعدادات</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- المحتوى الرئيسي -->
+  <main class="flex-1 max-w-3xl w-full mx-auto px-3 sm:px-5 py-4 space-y-4">
+
+    <!-- شريط اختيار التاريخ (اليوم / أيام سابقة) -->
+    <section class="bg-white dark:bg-slate-900 rounded-2xl p-3 sm:p-4 shadow-sm border border-stone-200/80 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <button id="btnPrevDay" type="button" class="p-2.5 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold transition active:scale-95" title="اليوم السابق">
+          ▶
+        </button>
+        <div>
+          <div id="displayDateArabic" class="text-sm sm:text-base font-extrabold text-slate-800 dark:text-white">اليوم</div>
+          <div id="displayDateSub" class="text-[11px] text-slate-500 dark:text-slate-400"></div>
+        </div>
+        <button id="btnNextDay" type="button" class="p-2.5 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold transition active:scale-95 disabled:opacity-40" title="اليوم التالي">
+          ◀
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <input id="datePickerInput" type="date" class="px-3 py-2 rounded-xl text-xs sm:text-sm bg-stone-100 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        <button id="btnGoToday" type="button" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-200 transition active:scale-95">
+          اليوم
+        </button>
+      </div>
+    </section>
+
+    <!-- شريط اختيار الابن/الابنة أو نظرة العائلة -->
+    <section class="bg-white dark:bg-slate-900 rounded-2xl p-3 sm:p-4 shadow-sm border border-stone-200/80 dark:border-slate-800">
+      <div class="flex items-center justify-between mb-2.5">
+        <span class="text-xs font-bold text-slate-500 dark:text-slate-400">اختر فرد الأسرة أو عرض الأسرة كاملة:</span>
+        <span id="selectedChildBadgeInfo" class="text-xs font-bold text-emerald-700 dark:text-emerald-400"></span>
+      </div>
+      <div id="childrenSelectorBar" class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+        <!-- يتم تعبئتها ديناميكياً عبر JS -->
+      </div>
+    </section>
+
+    <!-- ==================== التبويب ١: المتابعة اليومية ==================== -->
+    <div id="tab-tracker" class="tab-panel space-y-4">
+      <!-- بطاقة التقدم والنقاط والسلسلة -->
+      <section id="progressSummaryCard" class="bg-gradient-to-l from-emerald-800 to-emerald-700 dark:from-emerald-900 dark:to-slate-900 text-white rounded-3xl p-4 sm:p-5 shadow-md border border-emerald-600/30">
+        <!-- يتم تعبئتها ديناميكياً عبر JS -->
+      </section>
+
+      <!-- شبكة/بطاقات الصلوات الخمس -->
+      <section id="prayersGridContainer" class="space-y-3">
+        <!-- يتم تعبئتها ديناميكياً عبر JS -->
+      </section>
+    </div>
+
+    <!-- ==================== التبويب ٢: التذكير الصوتي ==================== -->
+    <div id="tab-voice" class="tab-panel hidden space-y-4">
+      <!-- بطاقة التذكير الصوتي الفوري والمؤقت التلقائي -->
+      <section class="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-5 shadow-sm border border-stone-200/80 dark:border-slate-800 space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h2 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+              <span>🔊</span>
+              <span>منظومة التذكير الصوتي باللغة العربية</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+              تستخدم الأداة تقنية النطق الصوتي في المتصفح (<span class="font-semibold">Web Speech API</span>) لقراءة رسائل تشجيعية مخصصة باسم الطفل والصلاة.
+            </p>
+          </div>
+          <button id="btnStopSpeech" type="button" class="px-3 py-2 rounded-xl text-xs font-bold bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 hover:bg-rose-200 transition shrink-0">
+            ⏹ إيقاف الصوت
+          </button>
+        </div>
+
+        <!-- حالة الصوت الحالية -->
+        <div id="speechStatusBanner" class="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <span id="speechIndicatorIcon" class="text-2xl">🎙️</span>
+            <div>
+              <div id="speechStatusText" class="text-xs sm:text-sm font-bold text-emerald-900 dark:text-emerald-200">جاهز لتشغيل التذكير الصوتي</div>
+              <div id="speechVoiceInfo" class="text-[11px] text-emerald-700 dark:text-emerald-400">جاري فحص الأصوات العربية المتاحة...</div>
+            </div>
+          </div>
+          <button id="btnSpeakAllFamily" type="button" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-sm transition active:scale-95 shrink-0">
+            📣 تذكير الجميع
+          </button>
+        </div>
+
+        <!-- تسجيل صوت الأب أو الأم الفعلي عبر الميكروفون -->
+        <div class="p-4 rounded-2xl bg-gradient-to-l from-amber-50 to-emerald-50/60 dark:from-slate-800 dark:to-slate-800/80 border border-amber-200 dark:border-amber-800/60 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-extrabold text-slate-800 dark:text-white">🎤 تسجيل تذكير بصوتك الفعلي (الأب محمد / الأم نورهان)</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300">سجّل نداءك بصوتك لأبنائك ليتم تشغيله عند التنبيه أو بضغطة زر</p>
+            </div>
+            <span id="recordingTimerBadge" class="hidden px-2.5 py-1 rounded-full text-xs font-extrabold bg-rose-600 text-white animate-pulse">● جاري التسجيل 00:00</span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btnStartVoiceRecord" type="button" class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-rose-600 hover:bg-rose-700 text-white shadow-sm transition active:scale-95 flex items-center gap-1.5">
+              <span>🎙️</span>
+              <span>بدء تسجيل صوتي</span>
+            </button>
+            <button id="btnStopVoiceRecord" type="button" disabled class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-slate-700 disabled:opacity-40 text-white transition active:scale-95">
+              ⏹ إنهاء وحفظ التسجيل
+            </button>
+            <button id="btnPlayRecordedVoice" type="button" class="hidden px-4 py-2.5 rounded-xl text-xs font-extrabold bg-emerald-700 hover:bg-emerald-800 text-white transition active:scale-95">
+              ▶️ سماع صوتي المسجّل
+            </button>
+            <button id="btnDeleteRecordedVoice" type="button" class="hidden px-3 py-2.5 rounded-xl text-xs font-bold bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 transition active:scale-95">
+              🗑️ حذف التسجيل
+            </button>
+          </div>
+          <p id="recordedVoiceStatus" class="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">لا يوجد تسجيل صوتي مخصص بعد (سيتم استخدام النطق الصوتي العربي التلقائي).</p>
+        </div>
+
+        <!-- إعداد منبه أوقات الصلوات الخمس بتوقيت الموبايل -->
+        <div class="p-4 rounded-2xl bg-stone-50 dark:bg-slate-800/70 border border-stone-200 dark:border-slate-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-extrabold text-slate-800 dark:text-white">⏰ منبه أوقات الصلوات الخمس (مرتبط بساعة الموبايل)</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">ينطلق التنبيه الصوتي تلقائياً فور تطابق ساعة الموبايل مع وقت كل صلاة، مع خيار التكرار الدوري</p>
+            </div>
+            <label class="inline-flex items-center cursor-pointer">
+              <input id="autoTimerCheckbox" type="checkbox" class="sr-only peer" />
+              <div class="w-12 h-7 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-600 peer-checked:after:-translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-emerald-600 relative"></div>
+            </label>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+            <label for="reminderIntervalSelect" class="text-xs font-bold text-slate-700 dark:text-slate-300">تكرار التذكير الإضافي بعد دخول الوقت:</label>
+            <select id="reminderIntervalSelect" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-900 border border-stone-300 dark:border-slate-600 text-slate-800 dark:text-slate-100">
+              <option value="0" selected>عند دخول وقت كل صلاة فقط (دقيق بساعة الموبايل)</option>
+              <option value="5">عند وقت الصلاة + كل 5 دقائق</option>
+              <option value="10">عند وقت الصلاة + كل 10 دقائق</option>
+              <option value="15">عند وقت الصلاة + كل 15 دقيقة</option>
+              <option value="30">عند وقت الصلاة + كل 30 دقيقة</option>
+            </select>
+          </div>
+          <div id="nextAutoReminderCountdown" class="text-xs font-semibold text-amber-700 dark:text-amber-400"></div>
+        </div>
+
+        <!-- ملاحظة مهمة حول متصفحات الموبايل والإشعارات في الخلفية -->
+        <div class="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 text-xs text-amber-900 dark:text-amber-200 leading-relaxed space-y-1">
+          <p class="font-bold">💡 تنويه مهم حول الصوت والإشعارات على الموبايل:</p>
+          <p>• تتطلب متصفحات الموبايل غالباً تفاعل المستخدم (لمسة زر) أولاً للسماح بتشغيل الصوت تلقائياً.</p>
+          <p>• يعمل التذكير الصوتي التلقائي طالما كانت الصفحة مفتوحة؛ أما الإشعارات في الخلفية أو عند قفل الشاشة فتعتمد على سياسة المتصفح ونظام التشغيل (iOS / Android).</p>
+          <p>• إذا لم يظهر صوت عربي واضح على جهازك، تأكد من تحميل حزمة اللغة العربية (Arabic) في إعدادات تحويل النص إلى كلام (TTS) في هاتفك.</p>
+        </div>
+      </section>
+
+      <!-- أزرار تشغيل التذكير لكل صلاة + تخصيص العبارات -->
+      <section class="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-5 shadow-sm border border-stone-200/80 dark:border-slate-800 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="text-base font-extrabold text-slate-800 dark:text-white">تخصيص وتشغيل رسائل الصلوات الخمس</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">استخدم المتغيرات <code class="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-slate-800 font-mono">{اسم}</code> و <code class="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-slate-800 font-mono">{الصلاة}</code></p>
+          </div>
+          <button id="btnResetPhrases" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+            استعادة العبارات الافتراضية
+          </button>
+        </div>
+
+        <div id="customPhrasesContainer" class="space-y-3">
+          <!-- يتم تعبئتها ديناميكياً عبر JS -->
+        </div>
+
+        <div class="pt-2 flex justify-end">
+          <button id="btnSavePhrases" type="button" class="w-full sm:w-auto px-5 py-3 rounded-2xl text-sm font-extrabold bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm transition active:scale-95">
+            💾 حفظ العبارات الصوتية
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== التبويب ٣: التقرير والملخص ==================== -->
+    <div id="tab-report" class="tab-panel hidden space-y-4">
+      <section class="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-5 shadow-sm border border-stone-200/80 dark:border-slate-800 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-white">📊 ملخص أداء الأبناء في الصلوات الخمس</h2>
+            <p id="reportDateCaption" class="text-xs text-slate-500 dark:text-slate-400"></p>
+          </div>
+          <button id="btnCopyReportText" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition active:scale-95">
+            📋 نسخ ملخص اليوم
+          </button>
+        </div>
+
+        <!-- جدول / بطاقات ملخص الأبناء الخمسة -->
+        <div id="familyReportCards" class="space-y-3">
+          <!-- يتم تعبئتها ديناميكياً عبر JS -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== التبويب ٤: الأبناء والإعدادات ==================== -->
+    <div id="tab-settings" class="tab-panel hidden space-y-4">
+      <!-- بطاقة أيقونة التطبيق (بيت الله الحرام) وتثبيته على الموبايل -->
+      <section class="bg-gradient-to-l from-emerald-50 to-amber-50/70 dark:from-slate-900 dark:to-emerald-950/30 rounded-3xl p-4 sm:p-5 shadow-sm border-2 border-amber-300/70 dark:border-amber-700/50 space-y-3.5">
+        <div class="flex items-center gap-3.5">
+          <div id="appIconPreviewBox" class="w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-500 to-emerald-950 border-2 border-amber-400 shadow-lg flex items-center justify-center shrink-0 p-2.5">
+            <svg viewBox="0 0 128 128" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="64" cy="64" r="52" fill="#fbbf24" fill-opacity="0.14"/>
+              <polygon points="64,20 106,38 64,56 22,38" fill="#27272a"/>
+              <polygon points="22,38 64,56 64,108 22,90" fill="#18181b"/>
+              <polygon points="64,56 106,38 106,90 64,108" fill="#09090b"/>
+              <polygon points="22,47 64,65 64,73 22,55" fill="#fbbf24"/>
+              <polygon points="64,65 106,47 106,55 64,73" fill="#f59e0b"/>
+              <polygon points="75,73 88,68 88,96 75,101" fill="#fde047"/>
+              <path d="M34,100 Q64,116 94,100" stroke="#fde68a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-200/80 text-amber-950 mb-1">أيقونة التطبيق الرسمية</span>
+            <h2 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-white">🕋 أيقونة بيت الله الحرام على الموبايل</h2>
+            <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+              تجد الأيقونة دائماً في <strong>أعلى يمين الشاشة</strong> وهنا في الإعدادات. لإظهارها على شاشة هاتفك الرئيسية:
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] bg-white/80 dark:bg-slate-900/80 p-3 rounded-2xl border border-stone-200 dark:border-slate-700">
+          <div>
+            <strong class="text-emerald-800 dark:text-emerald-300">📱 لهواتف أندرويد (Chrome):</strong>
+            <p class="text-slate-600 dark:text-slate-300 mt-0.5">اضغط على النقاط الثلاث (⋮) أعلى المتصفح ثم اختر <strong>"الإضافة إلى الشاشة الرئيسية"</strong>.</p>
+          </div>
+          <div>
+            <strong class="text-emerald-800 dark:text-emerald-300">🍏 لهواتف آيفون (Safari):</strong>
+            <p class="text-slate-600 dark:text-slate-300 mt-0.5">اضغط على زر المشاركة (⬆️) أسفل الشاشة ثم اختر <strong>"إضافة إلى الصفحة الرئيسية"</strong>.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400">يمكنك أيضاً حفظ صورة الكعبة المشرفة كملف صورة:</span>
+          <button id="btnDownloadAppIcon" type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-extrabold bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm transition active:scale-95">
+            ⬇️ تحميل أيقونة بيت الله الحرام (PNG)
+          </button>
+        </div>
+      </section>
+
+      <!-- تعديل بيانات أفراد الأسرة الخمسة -->
+      <section class="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-5 shadow-sm border border-stone-200/80 dark:border-slate-800 space-y-4">
+        <div>
+          <h2 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-white">👨‍👩‍👧‍👦 إعداد ملفات الأسرة (٥ أفراد)</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">يمكنك تعديل اسم كل فرد واختيار لون وشارة مميزة لكل منهم</p>
+        </div>
+
+        <div id="childrenSettingsList" class="space-y-3">
+          <!-- يتم تعبئتها ديناميكياً عبر JS -->
+        </div>
+
+        <button id="btnSaveChildren" type="button" class="w-full py-3.5 rounded-2xl text-sm font-extrabold bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm transition active:scale-95">
+          💾 حفظ بيانات الأسرة
+        </button>
+      </section>
+
+      <!-- ضبط أوقات الصلوات الخمس للتذكير -->
+      <section class="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-5 shadow-sm border border-stone-200/80 dark:border-slate-800 space-y-4">
+        <div>
+          <h2 class="text-base sm:text-lg font-extrabold text-slate-800 dark:text-white">🕌 أوقات الصلوات الخمس المرجعية</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">تُستخدم لتحديد الصلاة الحالية أو الأقرب عند تشغيل التذكير التلقائي</p>
+        </div>
+
+        <div id="prayerTimesSettingsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- يتم تعبئتها ديناميكياً عبر JS -->
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button id="btnSavePrayerTimes" type="button" class="flex-1 py-3 px-4 rounded-2xl text-sm font-extrabold bg-emerald-700 hover:bg-emerald-800 text-white transition active:scale-95">
+            💾 حفظ أوقات الصلاة
+          </button>
+          <button id="btnResetAllData" type="button" class="py-3 px-4 rounded-2xl text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 hover:bg-rose-100 transition active:scale-95">
+            🗑️ إعادة ضبط المصنع
+          </button>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- فوتر هادئ -->
+  <footer class="max-w-3xl w-full mx-auto px-4 py-5 text-center text-xs text-slate-500 dark:text-slate-400">
+    اللهم اجعلهم من مقيمي الصلاة • يتم حفظ البيانات محلياً على جهازك تلقائياً
+  </footer>
+
+  <script>
+    /**
+     * ============================================================================
+     * تطبيق "متابع صلاة الأبناء" - منطق التطبيق الكامل باللغة العربية (RTL)
+     * ============================================================================
+     * المزايا:
+     * 1. متابعة 5 أبناء (قابل للتعديل الاسم واللون والشارة) + عرض الأسرة كاملة.
+     * 2. الصلوات الخمس: الفجر، الظهر، العصر، المغرب، العشاء.
+     * 3. حالات الصلاة: تمت الصلاة (done)، متأخرة (late)، فائتة (missed)، لم تُسجّل بعد (pending).
+     * 4. التذكير الصوتي العربي عبر Web Speech API (ar-SA / ar-EG / ar) + عبارات قابلة للتخصيص.
+     * 5. تذكير تلقائي دوري أثناء فتح التطبيق مع عداد زمني وتنبيهات واضحة.
+     * 6. تنقل بين الأيام (اليوم / أيام سابقة) وتقرير ملخص مع نسخ سريع.
+     * 7. حفظ كامل في localStorage مع معالجة أخطاء آمنة.
+     * ============================================================================
+     */
+
+    // مفاتيح التخزين المحلي
+    const STORAGE_KEYS = {
+      CHILDREN: 'salah_tracker_children_v2',
+      RECORDS: 'salah_tracker_records_v1',
+      PHRASES: 'salah_tracker_phrases_v1',
+      PRAYER_TIMES: 'salah_tracker_times_v1',
+      AUTO_REMINDER: 'salah_tracker_auto_reminder_v2',
+      RECORDED_AUDIO: 'salah_tracker_recorded_audio_v1',
+      THEME: 'salah_tracker_theme_v1'
+    };
+
+    // تعريف الصلوات الخمس
+    const PRAYERS = [
+      { id: 'fajr', name: 'الفجر', icon: '🌅', defaultTime: '05:00', encouragement: 'بارك الله في همتك المبكرة' },
+      { id: 'dhuhr', name: 'الظهر', icon: '☀️', defaultTime: '11:45', encouragement: 'تقبل الله طاعتك في وسط النهار' },
+      { id: 'asr', name: 'العصر', icon: '🌤️', defaultTime: '14:40', encouragement: 'حافظ على صلاة العصر فهي صلاة الوسطى' },
+      { id: 'maghrib', name: 'المغرب', icon: '🌇', defaultTime: '17:02', encouragement: 'هيا نؤدي صلاة المغرب مع غروب الشمس' },
+      { id: 'isha', name: 'العشاء', icon: '🌙', defaultTime: '18:22', encouragement: 'نختم يومنا بطاعة الله وصلاة العشاء' }
+    ];
+
+    // حالات تسجيل الصلاة (27 حسنة لكل صلاة)
+    const HASANAT_PER_PRAYER = 27;
+    const PRAYER_STATUSES = {
+      pending: {
+        id: 'pending',
+        label: 'لم تُسجّل بعد',
+        shortLabel: 'لم تُسجّل',
+        points: 0,
+        badgeClass: 'bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 border-stone-300 dark:border-slate-700',
+        activeBtnClass: 'bg-slate-600 text-white border-slate-600'
+      },
+      done: {
+        id: 'done',
+        label: 'تمت (27 حسنة)',
+        shortLabel: 'تمت +27',
+        points: HASANAT_PER_PRAYER,
+        badgeClass: 'bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700',
+        activeBtnClass: 'bg-emerald-600 text-white border-emerald-600'
+      },
+      late: {
+        id: 'late',
+        label: 'متأخرة (27 حسنة)',
+        shortLabel: 'متأخرة +27',
+        points: HASANAT_PER_PRAYER,
+        badgeClass: 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-700',
+        activeBtnClass: 'bg-amber-500 text-white border-amber-500'
+      },
+      missed: {
+        id: 'missed',
+        label: 'فائتة (0 حسنة)',
+        shortLabel: 'فائتة',
+        points: 0,
+        badgeClass: 'bg-rose-100 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-700',
+        activeBtnClass: 'bg-rose-600 text-white border-rose-600'
+      }
+    };
+
+    // خيارات الألوان والشارات للأبناء
+    const COLOR_OPTIONS = [
+      { id: 'emerald', label: 'زمردي', dot: 'bg-emerald-600', ring: 'ring-emerald-500', pill: 'bg-emerald-100 text-emerald-900 dark:bg-emerald-900/50 dark:text-emerald-200' },
+      { id: 'sky', label: 'سماوي', dot: 'bg-sky-600', ring: 'ring-sky-500', pill: 'bg-sky-100 text-sky-900 dark:bg-sky-900/50 dark:text-sky-200' },
+      { id: 'amber', label: 'ذهبي', dot: 'bg-amber-500', ring: 'ring-amber-500', pill: 'bg-amber-100 text-amber-900 dark:bg-amber-900/50 dark:text-amber-200' },
+      { id: 'violet', label: 'بنفسجي', dot: 'bg-violet-600', ring: 'ring-violet-500', pill: 'bg-violet-100 text-violet-900 dark:bg-violet-900/50 dark:text-violet-200' },
+      { id: 'rose', label: 'وردي', dot: 'bg-rose-600', ring: 'ring-rose-500', pill: 'bg-rose-100 text-rose-900 dark:bg-rose-900/50 dark:text-rose-200' }
+    ];
+
+    const BADGE_ICONS = ['🌟', '🦁', '🦋', '🌙', '⭐', '🌸', '🚀', '🌿'];
+
+    // القيم الافتراضية لأفراد الأسرة الخمسة
+    function getDefaultChildren() {
+      return [
+        { id: 'child-1', name: 'الأب محمد', color: 'emerald', icon: '🌟' },
+        { id: 'child-2', name: 'الأم نورهان', color: 'rose', icon: '🌸' },
+        { id: 'child-3', name: 'الابنة مريم', color: 'violet', icon: '🦋' },
+        { id: 'child-4', name: 'الابن أنس', color: 'sky', icon: '🦁' },
+        { id: 'child-5', name: 'الابن براء', color: 'amber', icon: '🌙' }
+      ];
+    }
+
+    // العبارات الصوتية الافتراضية لكل صلاة
+    function getDefaultPhrases() {
+      return {
+        fajr: 'يا {اسم}، أشرق نور الفجر، هيا نتوضأ ونصلي صلاة الفجر، بارك الله فيك.',
+        dhuhr: 'يا {اسم}، حان الآن وقت صلاة الظهر، هيا نتوضأ ونصلي بخشوع.',
+        asr: 'يا {اسم}، لا ننسى صلاة العصر، هيا نستعد للصلاة وتقبل الله منك.',
+        maghrib: 'يا {اسم}، أذّن المغرب، هيا نلبي النداء ونصلي صلاة المغرب.',
+        isha: 'يا {اسم}، حان وقت صلاة العشاء، هيا نصلي ونختم يومنا بطاعة الله.'
+      };
+    }
+
+    // أوقات الصلاة الافتراضية
+    function getDefaultPrayerTimes() {
+      const map = {};
+      PRAYERS.forEach((p) => {
+        map[p.id] = p.defaultTime;
+      });
+      return map;
+    }
+
+    // حالة التطبيق في الذاكرة
+    const appState = {
+      activeTab: 'tracker',
+      selectedDate: '',
+      selectedChildId: 'family', // 'family' أو 'child-1' .. 'child-5'
+      children: [],
+      records: {}, // { [dateISO]: { [childId]: { [prayerId]: 'pending'|'done'|'late'|'missed' } } }
+      phrases: {},
+      prayerTimes: {},
+      autoReminder: {
+        enabled: true,
+        intervalMinutes: 0,
+        lastTriggeredAt: null,
+        lastPrayerAlarmKey: ''
+      },
+      recordedAudioDataUrl: null,
+      mediaRecorder: null,
+      recordingChunks: [],
+      recordingTimerId: null,
+      recordingSeconds: 0,
+      availableVoices: [],
+      isSpeaking: false,
+      countdownIntervalId: null
+    };
+
+    /**
+     * ========================================================================
+     * الدوال المساعدة للتاريخ والتخزين الآمن والتنبيهات
+     * ========================================================================
+     */
+    function getTodayISO() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function shiftDateISO(dateISO, deltaDays) {
+      const [y, m, d] = (dateISO || getTodayISO()).split('-').map(Number);
+      const dt = new Date(y, m - 1, d);
+      dt.setDate(dt.getDate() + deltaDays);
+      const ny = dt.getFullYear();
+      const nm = String(dt.getMonth() + 1).padStart(2, '0');
+      const nd = String(dt.getDate()).padStart(2, '0');
+      return `${ny}-${nm}-${nd}`;
+    }
+
+    function formatArabicDate(dateISO) {
+      const today = getTodayISO();
+      const yesterday = shiftDateISO(today, -1);
+      const [y, m, d] = (dateISO || today).split('-').map(Number);
+      const dt = new Date(y, m - 1, d);
+
+      let subtitle = `${y}/${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`;
+      try {
+        subtitle = new Intl.DateTimeFormat('ar-EG', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }).format(dt);
+      } catch (e) {}
+
+      let title = subtitle;
+      if (dateISO === today) title = 'اليوم';
+      else if (dateISO === yesterday) title = 'أمس';
+
+      return { title, subtitle };
+    }
+
+    function safeStorageGet(key, fallbackValue) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw === null || raw === undefined) return fallbackValue;
+        return JSON.parse(raw);
+      } catch (e) {
+        return fallbackValue;
+      }
+    }
+
+    function safeStorageSet(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (e) {
+        console.warn('Storage write skipped:', e);
+      }
+    }
+
+    function escapeHTML(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const styles = {
+        success: 'bg-emerald-800 text-white border-emerald-500',
+        warning: 'bg-amber-600 text-white border-amber-300',
+        info: 'bg-slate-800 text-white border-emerald-400'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto px-4 py-3 rounded-2xl shadow-lg border text-xs sm:text-sm font-bold text-center transition-all duration-300 ${styles[type] || styles.info}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-8px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function getPrayerStatus(dateISO, childId, prayerId) {
+      return (
+        (appState.records[dateISO] &&
+          appState.records[dateISO][childId] &&
+          appState.records[dateISO][childId][prayerId]) ||
+        'pending'
+      );
+    }
+
+    function setPrayerStatus(dateISO, childId, prayerId, statusId) {
+      if (!appState.records[dateISO]) appState.records[dateISO] = {};
+      if (!appState.records[dateISO][childId]) appState.records[dateISO][childId] = {};
+      appState.records[dateISO][childId][prayerId] = statusId;
+      safeStorageSet(STORAGE_KEYS.RECORDS, appState.records);
+      renderAll();
+    }
+
+    /**
+     * حساب إحصائيات طفل في يوم معين (كل صلاة = 27 حسنة)
+     */
+    function getChildDayStats(dateISO, childId) {
+      let doneCount = 0;
+      let lateCount = 0;
+      let missedCount = 0;
+      let pendingCount = 0;
+      let points = 0;
+
+      PRAYERS.forEach((p) => {
+        const st = getPrayerStatus(dateISO, childId, p.id);
+        if (st === 'done') {
+          doneCount++;
+          points += PRAYER_STATUSES.done.points; // 27 حسنة
+        } else if (st === 'late') {
+          lateCount++;
+          points += PRAYER_STATUSES.late.points; // 27 حسنة
+        } else if (st === 'missed') {
+          missedCount++;
+        } else {
+          pendingCount++;
+        }
+      });
+
+      // حساب إجمالي الحسنات التراكمية عبر كل الأيام المسجلة لهذا الفرد
+      let totalAllTimeHasanat = 0;
+      Object.keys(appState.records || {}).forEach((dKey) => {
+        const recForChild = appState.records[dKey] && appState.records[dKey][childId];
+        if (recForChild) {
+          PRAYERS.forEach((p) => {
+            const s = recForChild[p.id];
+            if (s === 'done' || s === 'late') {
+              totalAllTimeHasanat += HASANAT_PER_PRAYER;
+            }
+          });
+        }
+      });
+
+      const completedCount = doneCount + lateCount;
+      const percentage = Math.min(100, Math.round((completedCount / PRAYERS.length) * 100));
+
+      // حساب سلسلة الأيام المتتالية (Streak)
+      let streak = 0;
+      let cursor = getTodayISO();
+      for (let i = 0; i < 60; i++) {
+        let dayDoneOrLate = 0;
+        PRAYERS.forEach((pr) => {
+          const s = getPrayerStatus(cursor, childId, pr.id);
+          if (s === 'done' || s === 'late') dayDoneOrLate++;
+        });
+        if (dayDoneOrLate >= 4) {
+          streak++;
+          cursor = shiftDateISO(cursor, -1);
+        } else {
+          if (i === 0) {
+            cursor = shiftDateISO(cursor, -1);
+            continue;
+          }
+          break;
+        }
+      }
+
+      return {
+        doneCount,
+        lateCount,
+        missedCount,
+        pendingCount,
+        completedCount,
+        points,
+        totalAllTimeHasanat,
+        percentage,
+        streak
+      };
+    }
+
+    /**
+     * حساب إحصائيات الأسرة كاملة ليوم معين
+     */
+    function getFamilyDayStats(dateISO) {
+      const perChild = appState.children.map((child) => ({
+        child,
+        stats: getChildDayStats(dateISO, child.id)
+      }));
+
+      const totalSlots = appState.children.length * PRAYERS.length;
+      let totalCompleted = 0;
+      let totalDone = 0;
+      let totalLate = 0;
+      let totalMissed = 0;
+      let totalPending = 0;
+      let totalPoints = 0;
+      let totalAllTimeFamilyHasanat = 0;
+      let maxStreak = 0;
+
+      perChild.forEach(({ stats }) => {
+        totalCompleted += stats.completedCount;
+        totalDone += stats.doneCount;
+        totalLate += stats.lateCount;
+        totalMissed += stats.missedCount;
+        totalPending += stats.pendingCount;
+        totalPoints += stats.points;
+        totalAllTimeFamilyHasanat += stats.totalAllTimeHasanat;
+        if (stats.streak > maxStreak) maxStreak = stats.streak;
+      });
+
+      const percentage = totalSlots > 0 ? Math.round((totalCompleted / totalSlots) * 100) : 0;
+
+      return {
+        perChild,
+        totalSlots,
+        totalCompleted,
+        totalDone,
+        totalLate,
+        totalMissed,
+        totalPending,
+        totalPoints,
+        totalAllTimeFamilyHasanat,
+        percentage,
+        maxStreak
+      };
+    }
+
+    /**
+     * ========================================================================
+     * ميزة التذكير الصوتي العربي (Web Speech API)
+     * ========================================================================
+     */
+    function initSpeechSynthesis() {
+      if (!('speechSynthesis' in window)) {
+        updateSpeechStatusUI('المتصفح الحالي لا يدعم النطق الصوتي المباشر', 'يُرجى تجربة متصفح Chrome أو Safari الحديث', false);
+        return;
+      }
+
+      const loadVoices = () => {
+        const voices = window.speechSynthesis.getVoices() || [];
+        appState.availableVoices = voices;
+
+        // البحث عن صوت عربي مفضل (ar-SA, ar-EG, ar)
+        const arabicVoice = findBestArabicVoice(voices);
+        if (arabicVoice) {
+          updateSpeechStatusUI(
+            'جاهز لتشغيل التذكير الصوتي العربي',
+            `الصوت المختار: ${arabicVoice.name} (${arabicVoice.lang})`,
+            false
+          );
+        } else if (voices.length > 0) {
+          updateSpeechStatusUI(
+            'جاهز للتشغيل (قد يستخدم الصوت الافتراضي للنظام)',
+            'لم يُعثر على صوت عربي مثبت مسبقاً، يُنصح بتفعيل العربية في إعدادات الجهاز',
+            false
+          );
+        }
+      };
+
+      loadVoices();
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+      }
+    }
+
+    function findBestArabicVoice(voices) {
+      if (!Array.isArray(voices) || voices.length === 0) return null;
+      const preferredLangs = ['ar-SA', 'ar-EG', 'ar-AE', 'ar-JO', 'ar'];
+      for (const lang of preferredLangs) {
+        const match = voices.find((v) => v.lang && v.lang.toLowerCase().startsWith(lang.toLowerCase()));
+        if (match) return match;
+      }
+      return voices.find((v) => v.lang && v.lang.toLowerCase().startsWith('ar')) || null;
+    }
+
+    function updateSpeechStatusUI(statusText, subText, speaking) {
+      appState.isSpeaking = speaking;
+      const statusEl = document.getElementById('speechStatusText');
+      const infoEl = document.getElementById('speechVoiceInfo');
+      const iconEl = document.getElementById('speechIndicatorIcon');
+
+      if (statusEl) statusEl.textContent = statusText;
+      if (infoEl && subText) infoEl.textContent = subText;
+      if (iconEl) {
+        iconEl.textContent = speaking ? '🔊' : '🎙️';
+        if (speaking) {
+          iconEl.classList.add('speaking-pulse');
+        } else {
+          iconEl.classList.remove('speaking-pulse');
+        }
+      }
+    }
+
+    /**
+     * بناء نص التذكير الصوتي المخصص لطفل وصلاة
+     */
+    function buildReminderMessage(child, prayer) {
+      const cleanName = extractFirstOrCleanName(child.name);
+      const template = appState.phrases[prayer.id] || getDefaultPhrases()[prayer.id];
+      return template
+        .replace(/\{اسم\}/g, cleanName)
+        .replace(/\{الاسم\}/g, cleanName)
+        .replace(/\{الصلاة\}/g, `صلاة ${prayer.name}`);
+    }
+
+    function extractFirstOrCleanName(fullName) {
+      // إذا كان الاسم بصيغة "الأب (محمد)" نأخذ ما داخل القوس إن وُجد، وإلا نأخذ الاسم كاملاً
+      const matchInsideParens = fullName.match(/\(([^)]+)\)/);
+      if (matchInsideParens && matchInsideParens[1].trim()) {
+        return matchInsideParens[1].trim();
+      }
+      return fullName.trim();
+    }
+
+    /**
+     * تشغيل الصوت المسجل بالميكروفون إن وجد ثم قراءة نص التذكير بالعربية
+     */
+    function playVoiceReminderWithOptionalRecording(text, onDoneCallback = null) {
+      if (appState.recordedAudioDataUrl) {
+        try {
+          const audio = new Audio(appState.recordedAudioDataUrl);
+          updateSpeechStatusUI('جاري تشغيل تسجيلك الصوتي المخصص...', 'صوتك المسجل', true);
+          audio.onended = () => {
+            speakArabicText(text, onDoneCallback);
+          };
+          audio.onerror = () => {
+            speakArabicText(text, onDoneCallback);
+          };
+          audio.play().catch(() => {
+            speakArabicText(text, onDoneCallback);
+          });
+          return;
+        } catch (e) {
+          console.warn('Recorded audio play error:', e);
+        }
+      }
+      speakArabicText(text, onDoneCallback);
+    }
+
+    /**
+     * نطق عبارة عربية عبر Web Speech API
+     */
+    function speakArabicText(text, onDoneCallback = null) {
+      if (!('speechSynthesis' in window)) {
+        showToast('متصفحك لا يدعم ميزة النطق الصوتي', 'warning');
+        if (onDoneCallback) onDoneCallback();
+        return;
+      }
+
+      try {
+        // إلغاء أي نطق سابق لتجنب التراكم
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        const voices = window.speechSynthesis.getVoices() || appState.availableVoices;
+        const arabicVoice = findBestArabicVoice(voices);
+
+        if (arabicVoice) {
+          utterance.voice = arabicVoice;
+          utterance.lang = arabicVoice.lang;
+        } else {
+          utterance.lang = 'ar-SA';
+        }
+
+        utterance.rate = 0.95; // سرعة هادئة وواضحة للأطفال
+        utterance.pitch = 1.05;
+        utterance.volume = 1.0;
+
+        utterance.onstart = () => {
+          updateSpeechStatusUI(`جاري نطق التذكير: "${text}"`, 'يتم التحدث الآن...', true);
+        };
+
+        utterance.onend = () => {
+          updateSpeechStatusUI('اكتمل تشغيل التذكير الصوتي', 'جاهز لتشغيل تذكير آخر', false);
+          if (onDoneCallback) onDoneCallback();
+        };
+
+        utterance.onerror = (event) => {
+          console.warn('SpeechSynthesis error:', event);
+          updateSpeechStatusUI('تعذر إتمام النطق الصوتي تلقائياً', 'اضغط على زر التذكير مرة أخرى بعد لمس الشاشة', false);
+          if (onDoneCallback) onDoneCallback();
+        };
+
+        window.speechSynthesis.speak(utterance);
+      } catch (err) {
+        console.error('خطأ في تشغيل الصوت:', err);
+        updateSpeechStatusUI('حدث خطأ أثناء تشغيل الصوت', null, false);
+        showToast('تعذر تشغيل الصوت، تأكد من إعدادات الصوت في المتصفح', 'warning');
+        if (onDoneCallback) onDoneCallback();
+      }
+    }
+
+    /**
+     * تشغيل التذكير الصوتي لصلاة محددة للطفل المحدد (أو أول فرد إذا كان وضع الأسرة مفعلاً)
+     */
+    function triggerPrayerVoiceReminder(prayerId) {
+      const prayer = PRAYERS.find((p) => p.id === prayerId) || PRAYERS[1];
+      const targetChild =
+        appState.selectedChildId !== 'family'
+          ? appState.children.find((c) => c.id === appState.selectedChildId) || appState.children[0]
+          : appState.children[0];
+
+      if (!targetChild) return;
+
+      const msg = buildReminderMessage(targetChild, prayer);
+      showToast(`🔊 تذكير ${prayer.name} لـ ${extractFirstOrCleanName(targetChild.name)}`, 'info');
+      playVoiceReminderWithOptionalRecording(msg);
+    }
+
+    /**
+     * تذكير جميع أفراد الأسرة الخمسة تباعاً بالصلاة الحالية أو الأقرب
+     */
+    function triggerFamilyVoiceReminders(specificPrayer = null) {
+      const currentPrayer = specificPrayer || getCurrentOrNearestPrayer();
+      let index = 0;
+
+      const speakNext = () => {
+        if (index >= appState.children.length) {
+          showToast('تم الانتهاء من تذكير جميع أفراد الأسرة الخمسة', 'success');
+          return;
+        }
+        const child = appState.children[index];
+        index++;
+        const msg = buildReminderMessage(child, currentPrayer);
+        speakArabicText(msg, () => {
+          setTimeout(speakNext, 400);
+        });
+      };
+
+      showToast(`📣 حان وقت صلاة ${currentPrayer.name} — جاري التذكير الصوتي...`, 'info');
+      if (appState.recordedAudioDataUrl) {
+        playVoiceReminderWithOptionalRecording(`حان الآن وقت صلاة ${currentPrayer.name} يا أسرتنا الكريمة`, () => {
+          setTimeout(speakNext, 350);
+        });
+      } else {
+        speakNext();
+      }
+    }
+
+    /**
+     * تحديد الصلاة الحالية أو الأقرب بناءً على الوقت الحالي وأوقات الصلاة المضبوطة
+     */
+    function getCurrentOrNearestPrayer() {
+      const now = new Date();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+      let chosen = PRAYERS[0];
+      for (const p of PRAYERS) {
+        const timeStr = appState.prayerTimes[p.id] || p.defaultTime;
+        const [hh, mm] = timeStr.split(':').map(Number);
+        const prayerMins = hh * 60 + mm;
+        if (currentMinutes >= prayerMins) {
+          chosen = p;
+        }
+      }
+      return chosen;
+    }
+
+    /**
+     * حساب الصلاة القادمة والوقت المتبقي لها حسب ساعة الموبايل الحية
+     */
+    function getNextPrayerInfo(nowDate) {
+      const nowMinutes = nowDate.getHours() * 60 + nowDate.getMinutes();
+      const nowSeconds = nowDate.getSeconds();
+
+      for (const p of PRAYERS) {
+        const timeStr = appState.prayerTimes[p.id] || p.defaultTime;
+        const [hh, mm] = timeStr.split(':').map(Number);
+        const prayerTotalSecs = (hh * 60 + mm) * 60;
+        const nowTotalSecs = nowMinutes * 60 + nowSeconds;
+
+        if (prayerTotalSecs > nowTotalSecs) {
+          return {
+            prayer: p,
+            timeStr,
+            remainingSeconds: prayerTotalSecs - nowTotalSecs
+          };
+        }
+      }
+
+      // إذا انقضت صلاة العشاء، فالصلاة القادمة هي فجر الغد
+      const fajr = PRAYERS[0];
+      const fTime = appState.prayerTimes[fajr.id] || fajr.defaultTime;
+      const [fhh, fmm] = fTime.split(':').map(Number);
+      const fajrSecsTomorrow = (24 * 60 + fhh * 60 + fmm) * 60;
+      const nowTotalSecs = nowMinutes * 60 + nowSeconds;
+
+      return {
+        prayer: fajr,
+        timeStr: fTime,
+        remainingSeconds: fajrSecsTomorrow - nowTotalSecs
+      };
+    }
+
+    /**
+     * تحديث ساعة الموبايل الحية والعد التنازلي للصلاة القادمة وفحص المنبه التلقائي
+     */
+    function updateLiveMobileClockAndAlarms() {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      const ss = String(now.getSeconds()).padStart(2, '0');
+      const currentHHMM = `${hh}:${mm}`;
+
+      const clockEl = document.getElementById('liveMobileClock');
+      if (clockEl) {
+        clockEl.textContent = `${hh}:${mm}:${ss}`;
+      }
+
+      const hijriEl = document.getElementById('liveHijriDate');
+      if (hijriEl && (!hijriEl.dataset.day || hijriEl.dataset.day !== getTodayISO())) {
+        try {
+          const hijriFormatted = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          }).format(now);
+          hijriEl.textContent = hijriFormatted;
+          hijriEl.dataset.day = getTodayISO();
+        } catch (e) {
+          hijriEl.textContent = formatArabicDate(getTodayISO()).subtitle;
+        }
+      }
+
+      // تحديث الصلاة القادمة
+      const nextInfo = getNextPrayerInfo(now);
+      const nextNameEl = document.getElementById('nextPrayerNameBadge');
+      const nextCountEl = document.getElementById('nextPrayerCountdownBadge');
+      if (nextNameEl && nextInfo) {
+        nextNameEl.textContent = `${nextInfo.prayer.name} (${nextInfo.timeStr})`;
+      }
+      if (nextCountEl && nextInfo) {
+        const remH = Math.floor(nextInfo.remainingSeconds / 3600);
+        const remM = Math.floor((nextInfo.remainingSeconds % 3600) / 60);
+        const remS = nextInfo.remainingSeconds % 60;
+        nextCountEl.textContent = `متبقي ${String(remH).padStart(2, '0')}:${String(remM).padStart(2, '0')}:${String(remS).padStart(2, '0')}`;
+      }
+
+      // فحص منبه أوقات الصلاة بتوقيت الموبايل
+      if (appState.autoReminder.enabled) {
+        const todayKey = getTodayISO();
+        for (const p of PRAYERS) {
+          const pTime = appState.prayerTimes[p.id] || p.defaultTime;
+          const alarmUniqueKey = `${todayKey}_${p.id}_${pTime}`;
+          if (currentHHMM === pTime && appState.autoReminder.lastPrayerAlarmKey !== alarmUniqueKey) {
+            appState.autoReminder.lastPrayerAlarmKey = alarmUniqueKey;
+            appState.autoReminder.lastTriggeredAt = Date.now();
+            saveAutoReminderConfig();
+            triggerFamilyVoiceReminders(p);
+          }
+        }
+      }
+    }
+
+    /**
+     * إدارة التذكير التلقائي الدوري أثناء فتح التطبيق
+     */
+    function initAutoReminderTimer() {
+      const checkbox = document.getElementById('autoTimerCheckbox');
+      const select = document.getElementById('reminderIntervalSelect');
+
+      if (checkbox) {
+        checkbox.checked = Boolean(appState.autoReminder.enabled);
+        checkbox.addEventListener('change', () => {
+          setAutoReminderEnabled(checkbox.checked);
+        });
+      }
+
+      if (select) {
+        select.value = String(appState.autoReminder.intervalMinutes ?? 0);
+        select.addEventListener('change', () => {
+          appState.autoReminder.intervalMinutes = Number(select.value) || 0;
+          if (appState.autoReminder.enabled) {
+            appState.autoReminder.lastTriggeredAt = Date.now();
+          }
+          saveAutoReminderConfig();
+          updateAutoTimerUI();
+        });
+      }
+
+      updateLiveMobileClockAndAlarms();
+      updateAutoTimerUI();
+
+      // فحص كل ثانية لتحديث ساعة الموبايل والعداد وتنفيذ التذكير التلقائي
+      if (appState.countdownIntervalId) clearInterval(appState.countdownIntervalId);
+      appState.countdownIntervalId = setInterval(() => {
+        updateLiveMobileClockAndAlarms();
+
+        if (!appState.autoReminder.enabled) {
+          updateAutoTimerUI();
+          return;
+        }
+
+        const intervalMins = Number(appState.autoReminder.intervalMinutes) || 0;
+        if (intervalMins > 0) {
+          const intervalMs = intervalMins * 60 * 1000;
+          const lastAt = appState.autoReminder.lastTriggeredAt || Date.now();
+          const elapsed = Date.now() - lastAt;
+
+          if (elapsed >= intervalMs) {
+            appState.autoReminder.lastTriggeredAt = Date.now();
+            saveAutoReminderConfig();
+            const currentPrayer = getCurrentOrNearestPrayer();
+            const targetChild =
+              appState.selectedChildId !== 'family'
+                ? appState.children.find((c) => c.id === appState.selectedChildId) || appState.children[0]
+                : appState.children[0];
+            if (targetChild) {
+              const msg = buildReminderMessage(targetChild, currentPrayer);
+              playVoiceReminderWithOptionalRecording(msg);
+              showToast(`⏰ تذكير تلقائي: ${currentPrayer.name}`, 'info');
+            }
+          }
+        }
+
+        updateAutoTimerUI();
+      }, 1000);
+    }
+
+    function setAutoReminderEnabled(enabled) {
+      appState.autoReminder.enabled = Boolean(enabled);
+      if (appState.autoReminder.enabled) {
+        appState.autoReminder.lastTriggeredAt = Date.now();
+        showToast('تم تفعيل منبه الصلوات بتوقيت الموبايل', 'success');
+      } else {
+        showToast('تم إيقاف منبه الصلوات التلقائي', 'info');
+      }
+      saveAutoReminderConfig();
+      syncAutoTimerControls();
+      updateAutoTimerUI();
+    }
+
+    function saveAutoReminderConfig() {
+      safeStorageSet(STORAGE_KEYS.AUTO_REMINDER, appState.autoReminder);
+    }
+
+    function syncAutoTimerControls() {
+      const checkbox = document.getElementById('autoTimerCheckbox');
+      const select = document.getElementById('reminderIntervalSelect');
+      if (checkbox) checkbox.checked = Boolean(appState.autoReminder.enabled);
+      if (select) select.value = String(appState.autoReminder.intervalMinutes ?? 0);
+    }
+
+    function updateAutoTimerUI() {
+      const dot = document.getElementById('autoTimerDot');
+      const label = document.getElementById('autoTimerLabel');
+      const countdownEl = document.getElementById('nextAutoReminderCountdown');
+      const intervalMins = Number(appState.autoReminder.intervalMinutes) || 0;
+
+      if (appState.autoReminder.enabled) {
+        if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-300 animate-ping';
+        if (label) label.textContent = intervalMins > 0 ? `منبه + كل ${intervalMins}د` : 'منبه الصلاة: مفعّل';
+
+        if (countdownEl) {
+          if (intervalMins > 0) {
+            const intervalMs = intervalMins * 60 * 1000;
+            const lastAt = appState.autoReminder.lastTriggeredAt || Date.now();
+            const remainingMs = Math.max(0, intervalMs - (Date.now() - lastAt));
+            const totalSec = Math.ceil(remainingMs / 1000);
+            const mins = Math.floor(totalSec / 60);
+            const secs = totalSec % 60;
+            countdownEl.textContent = `⏳ المنبه مرتبط بساعة الموبايل + التكرار القادم خلال: ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+          } else {
+            countdownEl.textContent = '✅ المنبه مفعّل وسيعمل تلقائياً عند حلول وقت كل صلاة حسب ساعة موبايلك.';
+          }
+        }
+      } else {
+        if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-300/70';
+        if (label) label.textContent = 'منبه الصلاة: متوقف';
+        if (countdownEl) countdownEl.textContent = 'منبه الصلوات التلقائي متوقف حالياً.';
+      }
+    }
+
+    /**
+     * ========================================================================
+     * بناء وعرض واجهة المستخدم (Rendering)
+     * ========================================================================
+     */
+    function renderAll() {
+      renderDateHeader();
+      renderChildrenSelectorBar();
+
+      if (appState.activeTab === 'tracker') {
+        renderTrackerTab();
+      } else if (appState.activeTab === 'voice') {
+        renderVoiceTab();
+      } else if (appState.activeTab === 'report') {
+        renderReportTab();
+      } else if (appState.activeTab === 'settings') {
+        renderSettingsTab();
+      }
+    }
+
+    function renderDateHeader() {
+      const { title, subtitle } = formatArabicDate(appState.selectedDate);
+      const titleEl = document.getElementById('displayDateArabic');
+      const subEl = document.getElementById('displayDateSub');
+      const pickerEl = document.getElementById('datePickerInput');
+      const nextBtn = document.getElementById('btnNextDay');
+
+      if (titleEl) titleEl.textContent = title;
+      if (subEl) subEl.textContent = subtitle;
+      if (pickerEl) pickerEl.value = appState.selectedDate;
+      if (nextBtn) nextBtn.disabled = appState.selectedDate >= getTodayISO();
+    }
+
+    function getColorConfig(colorId) {
+      return COLOR_OPTIONS.find((c) => c.id === colorId) || COLOR_OPTIONS[0];
+    }
+
+    function renderChildrenSelectorBar() {
+      const bar = document.getElementById('childrenSelectorBar');
+      const infoEl = document.getElementById('selectedChildBadgeInfo');
+      if (!bar) return;
+
+      const isFamily = appState.selectedChildId === 'family';
+      let html = `
+        <button type="button" data-select-child="family"
+          class="shrink-0 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold border transition flex items-center gap-1.5 active:scale-95 ${
+            isFamily
+              ? 'bg-emerald-700 text-white border-emerald-700 shadow-sm'
+              : 'bg-stone-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-stone-200 dark:border-slate-700 hover:bg-stone-200 dark:hover:bg-slate-700'
+          }">
+          <span>👨‍👩‍👧‍👦</span>
+          <span>الأسرة (٥ أفراد)</span>
+        </button>
+      `;
+
+      appState.children.forEach((child) => {
+        const isSelected = appState.selectedChildId === child.id;
+        const colorCfg = getColorConfig(child.color);
+        const stats = getChildDayStats(appState.selectedDate, child.id);
+
+        html += `
+          <button type="button" data-select-child="${child.id}"
+            class="shrink-0 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold border transition flex items-center gap-2 active:scale-95 ${
+              isSelected
+                ? 'bg-emerald-700 text-white border-emerald-700 shadow-sm'
+                : 'bg-stone-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-stone-200 dark:border-slate-700 hover:bg-stone-200 dark:hover:bg-slate-700'
+            }">
+            <span class="w-2.5 h-2.5 rounded-full ${colorCfg.dot} ring-2 ring-white/70"></span>
+            <span>${child.icon}</span>
+            <span>${escapeHTML(extractFirstOrCleanName(child.name))}</span>
+            <span class="px-1.5 py-0.5 rounded-lg text-[10px] font-extrabold ${
+              isSelected ? 'bg-white/20 text-white' : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'
+            }">${stats.completedCount}/٥</span>
+          </button>
+        `;
+      });
+
+      bar.innerHTML = html;
+
+      if (infoEl) {
+        if (isFamily) {
+          infoEl.textContent = 'عرض متابعة جميع الأبناء الخمسة';
+        } else {
+          const activeChild = appState.children.find((c) => c.id === appState.selectedChildId);
+          infoEl.textContent = activeChild ? `المحدد: ${activeChild.name}` : '';
+        }
+      }
+
+      bar.querySelectorAll('[data-select-child]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          appState.selectedChildId = btn.getAttribute('data-select-child');
+          renderAll();
+        });
+      });
+    }
+
+    /**
+     * عرض تبويب المتابعة اليومية
+     */
+    function renderTrackerTab() {
+      const summaryCard = document.getElementById('progressSummaryCard');
+      const prayersContainer = document.getElementById('prayersGridContainer');
+      if (!summaryCard || !prayersContainer) return;
+
+      const isFamily = appState.selectedChildId === 'family';
+
+      if (isFamily) {
+        const famStats = getFamilyDayStats(appState.selectedDate);
+        summaryCard.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+            <div>
+              <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/15 text-emerald-50 mb-1">فضل صلاة الجماعة: ٢٧ حسنة لكل صلاة</span>
+              <h2 class="text-lg sm:text-xl font-extrabold">إنجاز الأسرة اليوم: ${famStats.percentage}%</h2>
+              <p class="text-xs text-emerald-100">أُديت ${famStats.totalCompleted} صلاة من أصل ${famStats.totalSlots} صلاة للأسرة</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="bg-black/20 rounded-2xl px-3.5 py-2 text-center border border-amber-300/30">
+                <div class="text-base sm:text-lg font-extrabold text-amber-300">✨ ${famStats.totalPoints}</div>
+                <div class="text-[10px] text-emerald-100">حسنات اليوم</div>
+              </div>
+              <div class="bg-black/20 rounded-2xl px-3.5 py-2 text-center">
+                <div class="text-base sm:text-lg font-extrabold text-emerald-200">🏆 ${famStats.totalAllTimeFamilyHasanat}</div>
+                <div class="text-[10px] text-emerald-100">إجمالي الحسنات</div>
+              </div>
+            </div>
+          </div>
+          <div class="w-full h-3 bg-black/25 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-400 rounded-full transition-all duration-500" style="width: ${famStats.percentage}%"></div>
+          </div>
+        `;
+
+        // عرض بطاقة لكل صلاة وبداخلها أزرار سريعة للأبناء الخمسة
+        prayersContainer.innerHTML = PRAYERS.map((prayer) => {
+          const prayerTime = appState.prayerTimes[prayer.id] || prayer.defaultTime;
+          const doneForPrayer = appState.children.filter((ch) => {
+            const st = getPrayerStatus(appState.selectedDate, ch.id, prayer.id);
+            return st === 'done' || st === 'late';
+          }).length;
+
+          const childRowsHTML = appState.children.map((child) => {
+            const currentSt = getPrayerStatus(appState.selectedDate, child.id, prayer.id);
+            const stMeta = PRAYER_STATUSES[currentSt];
+            const colorCfg = getColorConfig(child.color);
+
+            return `
+              <div class="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/70 border border-stone-200/70 dark:border-slate-700/70 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                <div class="flex items-center justify-between sm:justify-start gap-2.5">
+                  <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl ${colorCfg.pill} flex items-center justify-center text-base font-bold">${child.icon}</span>
+                    <div>
+                      <div class="text-sm font-extrabold text-slate-800 dark:text-white">${escapeHTML(child.name)}</div>
+                      <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded-lg border ${stMeta.badgeClass}">${stMeta.label}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- أزرار الحالات الأربع بمساحة لمس كبيرة -->
+                <div class="grid grid-cols-4 gap-1.5 sm:w-auto w-full">
+                  ${Object.values(PRAYER_STATUSES).map((s) => {
+                    const active = currentSt === s.id;
+                    return `
+                      <button type="button"
+                        data-set-status="${child.id}|${prayer.id}|${s.id}"
+                        class="py-2.5 px-2 rounded-xl text-[11px] sm:text-xs font-bold border transition active:scale-95 ${
+                          active
+                            ? s.activeBtnClass + ' shadow-sm'
+                            : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-stone-200 dark:border-slate-700 hover:bg-stone-100 dark:hover:bg-slate-800'
+                        }">
+                        ${s.shortLabel}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <article class="bg-white dark:bg-slate-900 rounded-3xl p-4 shadow-sm border border-stone-200/80 dark:border-slate-800 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-stone-100 dark:border-slate-800">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-2xl">${prayer.icon}</span>
+                  <div>
+                    <h3 class="text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                      <span>صلاة ${prayer.name}</span>
+                      <span class="text-xs font-bold px-2 py-0.5 rounded-lg bg-stone-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${prayerTime}</span>
+                    </h3>
+                    <p class="text-[11px] text-emerald-700 dark:text-emerald-400 font-semibold">أتمها ${doneForPrayer} من ${appState.children.length} أبناء</p>
+                  </div>
+                </div>
+
+                <button type="button" data-voice-prayer="${prayer.id}"
+                  class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700 hover:bg-amber-200 transition active:scale-95 flex items-center gap-1.5">
+                  <span>🔊</span>
+                  <span>تشغيل التذكير الصوتي الآن</span>
+                </button>
+              </div>
+
+              <div class="space-y-2">
+                ${childRowsHTML}
+              </div>
+            </article>
+          `;
+        }).join('');
+      } else {
+        // عرض مخصص لطفل واحد محدد
+        const child = appState.children.find((c) => c.id === appState.selectedChildId) || appState.children[0];
+        const stats = getChildDayStats(appState.selectedDate, child.id);
+        const colorCfg = getColorConfig(child.color);
+
+        summaryCard.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-white/15 border border-white/25 flex items-center justify-center text-2xl">
+                ${child.icon}
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h2 class="text-lg sm:text-xl font-extrabold">${escapeHTML(child.name)}</h2>
+                  <span class="w-3 h-3 rounded-full ${colorCfg.dot} ring-2 ring-white"></span>
+                </div>
+                <p class="text-xs text-emerald-100">نسبة الإنجاز اليومي: <strong class="text-amber-300">${stats.percentage}%</strong> (${stats.completedCount} من ٥ صلوات)</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <div class="bg-black/20 rounded-2xl px-3.5 py-2 text-center border border-amber-300/30">
+                <div class="text-base sm:text-lg font-extrabold text-amber-300">✨ ${stats.points}</div>
+                <div class="text-[10px] text-emerald-100">حسنات اليوم (×27)</div>
+              </div>
+              <div class="bg-black/20 rounded-2xl px-3.5 py-2 text-center">
+                <div class="text-base sm:text-lg font-extrabold text-emerald-200">🏆 ${stats.totalAllTimeHasanat}</div>
+                <div class="text-[10px] text-emerald-100">إجمالي الحسنات</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full h-3 bg-black/25 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-400 rounded-full transition-all duration-500" style="width: ${stats.percentage}%"></div>
+          </div>
+        `;
+
+        prayersContainer.innerHTML = PRAYERS.map((prayer) => {
+          const prayerTime = appState.prayerTimes[prayer.id] || prayer.defaultTime;
+          const currentSt = getPrayerStatus(appState.selectedDate, child.id, prayer.id);
+          const stMeta = PRAYER_STATUSES[currentSt];
+          const previewMsg = buildReminderMessage(child, prayer);
+
+          return `
+            <article class="bg-white dark:bg-slate-900 rounded-3xl p-4 shadow-sm border border-stone-200/80 dark:border-slate-800 space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-2xl">${prayer.icon}</span>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-base font-extrabold text-slate-800 dark:text-white">صلاة ${prayer.name}</h3>
+                      <span class="text-xs font-bold px-2 py-0.5 rounded-lg bg-stone-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${prayerTime}</span>
+                    </div>
+                    <span class="inline-block mt-1 text-xs font-bold px-2.5 py-0.5 rounded-lg border ${stMeta.badgeClass}">${stMeta.label}</span>
+                  </div>
+                </div>
+
+                <button type="button" data-voice-prayer="${prayer.id}"
+                  class="px-3.5 py-2.5 rounded-2xl text-xs font-extrabold bg-amber-500 hover:bg-amber-600 text-white shadow-sm transition active:scale-95 flex items-center gap-1.5 shrink-0">
+                  <span>🔊</span>
+                  <span>تشغيل التذكير الصوتي الآن</span>
+                </button>
+              </div>
+
+              <!-- معاينة الرسالة الصوتية -->
+              <div class="px-3 py-2 rounded-xl bg-stone-50 dark:bg-slate-800/60 text-xs text-slate-600 dark:text-slate-300 border border-stone-200/60 dark:border-slate-700/60">
+                💬 "${escapeHTML(previewMsg)}"
+              </div>
+
+              <!-- أزرار تسجيل الحالة بمساحة لمس كبيرة -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                ${Object.values(PRAYER_STATUSES).map((s) => {
+                  const active = currentSt === s.id;
+                  return `
+                    <button type="button"
+                      data-set-status="${child.id}|${prayer.id}|${s.id}"
+                      class="py-3 px-3 rounded-2xl text-xs sm:text-sm font-extrabold border transition active:scale-95 flex items-center justify-center gap-1 ${
+                        active
+                          ? s.activeBtnClass + ' shadow-sm'
+                          : 'bg-stone-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-stone-200 dark:border-slate-700 hover:bg-stone-100 dark:hover:bg-slate-700'
+                      }">
+                      <span>${s.label}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      // ربط أحداث أزرار تغيير الحالة
+      prayersContainer.querySelectorAll('[data-set-status]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const [cId, pId, stId] = btn.getAttribute('data-set-status').split('|');
+          setPrayerStatus(appState.selectedDate, cId, pId, stId);
+          const pObj = PRAYERS.find((x) => x.id === pId);
+          const cObj = appState.children.find((x) => x.id === cId);
+          showToast(`تم تسجيل ${pObj ? pObj.name : ''} لـ ${cObj ? extractFirstOrCleanName(cObj.name) : ''}: ${PRAYER_STATUSES[stId].label}`, 'success');
+        });
+      });
+
+      // ربط أحداث أزرار التذكير الصوتي
+      prayersContainer.querySelectorAll('[data-voice-prayer]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const pId = btn.getAttribute('data-voice-prayer');
+          triggerPrayerVoiceReminder(pId);
+        });
+      });
+    }
+
+    /**
+     * عرض تبويب التذكير الصوتي وتخصيص العبارات
+     */
+    function renderVoiceTab() {
+      syncAutoTimerControls();
+      updateAutoTimerUI();
+      updateRecordedVoiceUI();
+
+      const container = document.getElementById('customPhrasesContainer');
+      if (!container) return;
+
+      const activeChild =
+        appState.selectedChildId !== 'family'
+          ? appState.children.find((c) => c.id === appState.selectedChildId) || appState.children[0]
+          : appState.children[0];
+
+      container.innerHTML = PRAYERS.map((prayer) => {
+        const phraseVal = appState.phrases[prayer.id] || getDefaultPhrases()[prayer.id];
+        const sampleText = buildReminderMessage(activeChild, prayer);
+
+        return `
+          <div class="p-3.5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label for="phrase-input-${prayer.id}" class="text-sm font-extrabold text-slate-800 dark:text-white flex items-center gap-1.5">
+                <span>${prayer.icon}</span>
+                <span>عبارة صلاة ${prayer.name}</span>
+              </label>
+              <button type="button" data-test-phrase="${prayer.id}"
+                class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition active:scale-95 flex items-center gap-1">
+                <span>🔊</span>
+                <span>تشغيل التذكير الصوتي الآن</span>
+              </button>
+            </div>
+
+            <textarea id="phrase-input-${prayer.id}" data-phrase-id="${prayer.id}" rows="2"
+              class="w-full px-3 py-2 rounded-xl text-xs sm:text-sm bg-white dark:bg-slate-900 border border-stone-300 dark:border-slate-600 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">${escapeHTML(phraseVal)}</textarea>
+
+            <div class="text-[11px] text-slate-500 dark:text-slate-400">
+              معاينة لـ <strong class="text-slate-700 dark:text-slate-200">${escapeHTML(extractFirstOrCleanName(activeChild.name))}</strong>: "${escapeHTML(sampleText)}"
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.querySelectorAll('[data-test-phrase]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const pId = btn.getAttribute('data-test-phrase');
+          const textarea = document.getElementById(`phrase-input-${pId}`);
+          if (textarea) {
+            appState.phrases[pId] = textarea.value.trim() || getDefaultPhrases()[pId];
+          }
+          triggerPrayerVoiceReminder(pId);
+        });
+      });
+    }
+
+    /**
+     * عرض تبويب التقرير والملخص
+     */
+    function renderReportTab() {
+      const cardsContainer = document.getElementById('familyReportCards');
+      const captionEl = document.getElementById('reportDateCaption');
+      if (!cardsContainer) return;
+
+      const { title, subtitle } = formatArabicDate(appState.selectedDate);
+      if (captionEl) captionEl.textContent = `التاريخ: ${title} (${subtitle})`;
+
+      const famStats = getFamilyDayStats(appState.selectedDate);
+
+      cardsContainer.innerHTML = famStats.perChild.map(({ child, stats }) => {
+        const colorCfg = getColorConfig(child.color);
+
+        const badgesHTML = PRAYERS.map((p) => {
+          const st = getPrayerStatus(appState.selectedDate, child.id, p.id);
+          const stMeta = PRAYER_STATUSES[st];
+          return `
+            <div class="flex flex-col items-center p-2 rounded-xl border ${stMeta.badgeClass} text-center">
+              <span class="text-sm">${p.icon}</span>
+              <span class="text-[11px] font-extrabold mt-0.5">${p.name}</span>
+              <span class="text-[10px] font-bold mt-0.5">${stMeta.shortLabel}</span>
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <div class="p-4 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <span class="w-10 h-10 rounded-2xl ${colorCfg.pill} flex items-center justify-center text-lg font-bold">${child.icon}</span>
+                <div>
+                  <h3 class="text-sm sm:text-base font-extrabold text-slate-800 dark:text-white">${escapeHTML(child.name)}</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">
+                    تمت: <strong>${stats.doneCount}</strong> • متأخرة: <strong>${stats.lateCount}</strong> • فائتة: <strong>${stats.missedCount}</strong> • لم تُسجّل: <strong>${stats.pendingCount}</strong>
+                  </p>
+                </div>
+              </div>
+              <div class="text-left">
+                <span class="text-base font-extrabold text-emerald-700 dark:text-emerald-400">${stats.percentage}%</span>
+                <div class="text-[11px] font-bold text-amber-600 dark:text-amber-400">✨ ${stats.points} حسنة اليوم • 🏆 ${stats.totalAllTimeHasanat} إجمالي</div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-5 gap-1.5">
+              ${badgesHTML}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /**
+     * عرض تبويب الإعدادات (تعديل الأبناء الخمسة وأوقات الصلاة)
+     */
+    function renderSettingsTab() {
+      const listEl = document.getElementById('childrenSettingsList');
+      const timesGridEl = document.getElementById('prayerTimesSettingsGrid');
+      if (!listEl || !timesGridEl) return;
+
+      listEl.innerHTML = appState.children.map((child, idx) => {
+        const colorRadios = COLOR_OPTIONS.map((c) => {
+          const checked = child.color === c.id ? 'checked' : '';
+          return `
+            <label class="cursor-pointer inline-flex items-center gap-1 px-2 py-1 rounded-lg border border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-[11px] font-bold">
+              <input type="radio" name="child-color-${child.id}" value="${c.id}" ${checked} class="accent-emerald-600" />
+              <span class="w-2.5 h-2.5 rounded-full ${c.dot}"></span>
+              <span>${c.label}</span>
+            </label>
+          `;
+        }).join('');
+
+        const iconSelectOpts = BADGE_ICONS.map((ic) => {
+          const sel = child.icon === ic ? 'selected' : '';
+          return `<option value="${ic}" ${sel}>${ic}</option>`;
+        }).join('');
+
+        return `
+          <div class="p-3.5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 space-y-2.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-extrabold text-emerald-700 dark:text-emerald-400 shrink-0">#${idx + 1}</span>
+              <select id="child-icon-${child.id}" class="px-2.5 py-2 rounded-xl text-base bg-white dark:bg-slate-900 border border-stone-300 dark:border-slate-600">
+                ${iconSelectOpts}
+              </select>
+              <input id="child-name-${child.id}" type="text" value="${escapeHTML(child.name)}" maxlength="40"
+                placeholder="اسم الابن أو الابنة"
+                class="flex-1 px-3 py-2 rounded-xl text-sm font-bold bg-white dark:bg-slate-900 border border-stone-300 dark:border-slate-600 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            </div>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 ml-1">اللون:</span>
+              ${colorRadios}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      timesGridEl.innerHTML = PRAYERS.map((prayer) => {
+        const val = appState.prayerTimes[prayer.id] || prayer.defaultTime;
+        return `
+          <div class="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 flex items-center justify-between gap-2">
+            <label for="prayer-time-${prayer.id}" class="text-sm font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+              <span>${prayer.icon}</span>
+              <span>صلاة ${prayer.name}</span>
+            </label>
+            <input id="prayer-time-${prayer.id}" type="time" value="${val}"
+              class="px-3 py-2 rounded-xl text-sm font-bold bg-white dark:bg-slate-900 border border-stone-300 dark:border-slate-600 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          </div>
+        `;
+      }).join('');
+    }
+
+    /**
+     * ========================================================================
+     * ربط الأحداث العامة وحفظ الإعدادات
+     * ========================================================================
+     */
+    function bindGlobalEvents() {
+      // التبديل بين التبويبات
+      document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetTab = btn.getAttribute('data-tab');
+          appState.activeTab = targetTab;
+
+          document.querySelectorAll('.tab-btn').forEach((b) => {
+            const active = b.getAttribute('data-tab') === targetTab;
+            if (active) {
+              b.className = 'tab-btn flex-1 min-w-[95px] py-2.5 px-3 rounded-t-2xl text-xs sm:text-sm font-bold bg-stone-50 dark:bg-slate-950 text-emerald-800 dark:text-emerald-300 transition flex items-center justify-center gap-1.5';
+            } else {
+              b.className = 'tab-btn flex-1 min-w-[95px] py-2.5 px-3 rounded-t-2xl text-xs sm:text-sm font-bold text-emerald-100 hover:bg-emerald-700/60 transition flex items-center justify-center gap-1.5';
+            }
+          });
+
+          document.querySelectorAll('.tab-panel').forEach((panel) => {
+            panel.classList.toggle('hidden', panel.id !== `tab-${targetTab}`);
+          });
+
+          renderAll();
+        });
+      });
+
+      // التنقل بين الأيام
+      document.getElementById('btnPrevDay')?.addEventListener('click', () => {
+        appState.selectedDate = shiftDateISO(appState.selectedDate, -1);
+        renderAll();
+      });
+
+      document.getElementById('btnNextDay')?.addEventListener('click', () => {
+        const next = shiftDateISO(appState.selectedDate, 1);
+        if (next <= getTodayISO()) {
+          appState.selectedDate = next;
+          renderAll();
+        }
+      });
+
+      document.getElementById('btnGoToday')?.addEventListener('click', () => {
+        appState.selectedDate = getTodayISO();
+        renderAll();
+      });
+
+      document.getElementById('datePickerInput')?.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val) {
+          appState.selectedDate = val;
+          renderAll();
+        }
+      });
+
+      // زر التذكير التلقائي في الهيدر
+      document.getElementById('btnToggleAutoTimer')?.addEventListener('click', () => {
+        setAutoReminderEnabled(!appState.autoReminder.enabled);
+      });
+
+      // تبديل الوضع الليلي / النهاري
+      document.getElementById('btnThemeToggle')?.addEventListener('click', () => {
+        const htmlEl = document.documentElement;
+        const isDark = htmlEl.classList.toggle('dark');
+        safeStorageSet(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light');
+        updateThemeIcon(isDark);
+      });
+
+      // إيقاف الصوت فوراً
+      document.getElementById('btnStopSpeech')?.addEventListener('click', () => {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+        }
+        updateSpeechStatusUI('تم إيقاف التذكير الصوتي', 'جاهز للتشغيل عند الحاجة', false);
+      });
+
+      // تذكير جميع الأبناء
+      document.getElementById('btnSpeakAllFamily')?.addEventListener('click', () => {
+        triggerFamilyVoiceReminders();
+      });
+
+      // حفظ العبارات الصوتية
+      document.getElementById('btnSavePhrases')?.addEventListener('click', () => {
+        document.querySelectorAll('[data-phrase-id]').forEach((ta) => {
+          const pId = ta.getAttribute('data-phrase-id');
+          appState.phrases[pId] = ta.value.trim() || getDefaultPhrases()[pId];
+        });
+        safeStorageSet(STORAGE_KEYS.PHRASES, appState.phrases);
+        showToast('تم حفظ العبارات الصوتية بنجاح', 'success');
+        renderVoiceTab();
+      });
+
+      // استعادة العبارات الافتراضية
+      document.getElementById('btnResetPhrases')?.addEventListener('click', () => {
+        appState.phrases = getDefaultPhrases();
+        safeStorageSet(STORAGE_KEYS.PHRASES, appState.phrases);
+        showToast('تمت استعادة العبارات الافتراضية', 'info');
+        renderVoiceTab();
+      });
+
+      // نسخ ملخص اليوم
+      document.getElementById('btnCopyReportText')?.addEventListener('click', () => {
+        const text = buildShareableReportText();
+        copyTextToClipboard(text);
+      });
+
+      // حفظ بيانات الأبناء الخمسة
+      document.getElementById('btnSaveChildren')?.addEventListener('click', () => {
+        appState.children = appState.children.map((child, idx) => {
+          const nameInput = document.getElementById(`child-name-${child.id}`);
+          const iconSelect = document.getElementById(`child-icon-${child.id}`);
+          const colorRadio = document.querySelector(`input[name="child-color-${child.id}"]:checked`);
+          const rawName = nameInput ? nameInput.value.trim() : '';
+          return {
+            ...child,
+            name: rawName || `الابن/الابنة ${idx + 1}`,
+            icon: iconSelect ? iconSelect.value : child.icon,
+            color: colorRadio ? colorRadio.value : child.color
+          };
+        });
+        safeStorageSet(STORAGE_KEYS.CHILDREN, appState.children);
+        showToast('تم حفظ بيانات الأبناء الخمسة بنجاح', 'success');
+        renderAll();
+      });
+
+      // حفظ أوقات الصلاة
+      document.getElementById('btnSavePrayerTimes')?.addEventListener('click', () => {
+        PRAYERS.forEach((p) => {
+          const inp = document.getElementById(`prayer-time-${p.id}`);
+          if (inp && inp.value) {
+            appState.prayerTimes[p.id] = inp.value;
+          }
+        });
+        safeStorageSet(STORAGE_KEYS.PRAYER_TIMES, appState.prayerTimes);
+        showToast('تم حفظ أوقات الصلوات الخمس', 'success');
+        renderAll();
+      });
+
+      // إعادة ضبط المصنع
+      document.getElementById('btnResetAllData')?.addEventListener('click', () => {
+        try {
+          Object.values(STORAGE_KEYS).forEach((k) => localStorage.removeItem(k));
+        } catch (e) {
+          console.warn(e);
+        }
+        loadInitialState();
+        renderAll();
+        showToast('تمت إعادة ضبط جميع الإعدادات والسجلات', 'info');
+      });
+
+      // تحميل صورة أيقونة التطبيق بصيغة PNG عالية الدقة
+      document.getElementById('btnDownloadAppIcon')?.addEventListener('click', () => {
+        downloadAppIconPNG();
+      });
+
+      // النقر على أيقونة الكعبة في الهيدر للانتقال السريع إلى بطاقة الأيقونة وتحميلها
+      document.getElementById('btnHeaderKaabaIcon')?.addEventListener('click', () => {
+        const settingsTabBtn = document.querySelector('.tab-btn[data-tab="settings"]');
+        if (settingsTabBtn) settingsTabBtn.click();
+        showToast('🕋 هذه أيقونة بيت الله الحرام — يمكنك تحميلها أو إضافتها للشاشة الرئيسية', 'info');
+      });
+
+      // تسجيل الصوت الفعلي عبر الميكروفون
+      document.getElementById('btnStartVoiceRecord')?.addEventListener('click', startVoiceRecording);
+      document.getElementById('btnStopVoiceRecord')?.addEventListener('click', stopVoiceRecording);
+      document.getElementById('btnPlayRecordedVoice')?.addEventListener('click', () => {
+        if (appState.recordedAudioDataUrl) {
+          const audio = new Audio(appState.recordedAudioDataUrl);
+          audio.play().catch(() => showToast('تعذر تشغيل الملف الصوتي', 'warning'));
+        }
+      });
+      document.getElementById('btnDeleteRecordedVoice')?.addEventListener('click', () => {
+        appState.recordedAudioDataUrl = null;
+        try {
+          localStorage.removeItem(STORAGE_KEYS.RECORDED_AUDIO);
+        } catch (e) {}
+        updateRecordedVoiceUI();
+        showToast('تم حذف التسجيل الصوتي المخصص', 'info');
+      });
+    }
+
+    /**
+     * تسجيل صوت الأب/الأم الفعلي عبر الميكروفون وحفظه في الجهاز
+     */
+    async function startVoiceRecording() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        showToast('المتصفح الحالي لا يدعم التسجيل من الميكروفون', 'warning');
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        appState.recordingChunks = [];
+        const recorder = new MediaRecorder(stream);
+        appState.mediaRecorder = recorder;
+
+        recorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) {
+            appState.recordingChunks.push(e.data);
+          }
+        };
+
+        recorder.onstop = () => {
+          stream.getTracks().forEach((track) => track.stop());
+          const blob = new Blob(appState.recordingChunks, { type: 'audio/webm' });
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            appState.recordedAudioDataUrl = reader.result;
+            safeStorageSet(STORAGE_KEYS.RECORDED_AUDIO, appState.recordedAudioDataUrl);
+            updateRecordedVoiceUI();
+            showToast('✅ تم حفظ تسجيلك الصوتي بنجاح', 'success');
+          };
+          reader.readAsDataURL(blob);
+        };
+
+        recorder.start();
+        appState.recordingSeconds = 0;
+        const startBtn = document.getElementById('btnStartVoiceRecord');
+        const stopBtn = document.getElementById('btnStopVoiceRecord');
+        const timerBadge = document.getElementById('recordingTimerBadge');
+
+        if (startBtn) startBtn.disabled = true;
+        if (stopBtn) stopBtn.disabled = false;
+        if (timerBadge) {
+          timerBadge.classList.remove('hidden');
+          timerBadge.textContent = '● جاري التسجيل 00:00';
+        }
+
+        appState.recordingTimerId = setInterval(() => {
+          appState.recordingSeconds++;
+          const s = String(appState.recordingSeconds % 60).padStart(2, '0');
+          const m = String(Math.floor(appState.recordingSeconds / 60)).padStart(2, '0');
+          if (timerBadge) timerBadge.textContent = `● جاري التسجيل ${m}:${s}`;
+          if (appState.recordingSeconds >= 20) {
+            stopVoiceRecording();
+          }
+        }, 1000);
+      } catch (err) {
+        console.warn('Mic permission error:', err);
+        showToast('يُرجى السماح للتطبيق باستخدام الميكروفون للتسجيل', 'warning');
+      }
+    }
+
+    function stopVoiceRecording() {
+      if (appState.recordingTimerId) {
+        clearInterval(appState.recordingTimerId);
+        appState.recordingTimerId = null;
+      }
+      if (appState.mediaRecorder && appState.mediaRecorder.state !== 'inactive') {
+        appState.mediaRecorder.stop();
+      }
+      const startBtn = document.getElementById('btnStartVoiceRecord');
+      const stopBtn = document.getElementById('btnStopVoiceRecord');
+      const timerBadge = document.getElementById('recordingTimerBadge');
+      if (startBtn) startBtn.disabled = false;
+      if (stopBtn) stopBtn.disabled = true;
+      if (timerBadge) timerBadge.classList.add('hidden');
+    }
+
+    function updateRecordedVoiceUI() {
+      const playBtn = document.getElementById('btnPlayRecordedVoice');
+      const delBtn = document.getElementById('btnDeleteRecordedVoice');
+      const statusEl = document.getElementById('recordedVoiceStatus');
+      const hasAudio = Boolean(appState.recordedAudioDataUrl);
+
+      if (playBtn) playBtn.classList.toggle('hidden', !hasAudio);
+      if (delBtn) delBtn.classList.toggle('hidden', !hasAudio);
+      if (statusEl) {
+        statusEl.textContent = hasAudio
+          ? '✅ يوجد تسجيل صوتي بصوتك محفوظ وجاهز للتشغيل مع التذكيرات.'
+          : 'لا يوجد تسجيل صوتي مخصص بعد (سيتم استخدام النطق الصوتي العربي التلقائي).';
+      }
+    }
+
+    /**
+     * توليد وتحميل أيقونة بيت الله الحرام (الكعبة المشرفة) كصورة PNG بحجم 512x512
+     */
+    function downloadAppIconPNG() {
+      try {
+        const size = 512;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // خلفية زمردية متدرجة بزوايا دائرية
+        const grad = ctx.createLinearGradient(0, 0, size, size);
+        grad.addColorStop(0, '#059669');
+        grad.addColorStop(1, '#022c22');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.roundRect(0, 0, size, size, 112);
+        ctx.fill();
+
+        // هالة ذهبية خفيفة خلف الكعبة المشرفة
+        ctx.fillStyle = 'rgba(251, 191, 36, 0.14)';
+        ctx.beginPath();
+        ctx.arc(256, 256, 195, 0, Math.PI * 2);
+        ctx.fill();
+
+        // سقف الكعبة المشرفة (منظور ثلاثي الأبعاد)
+        ctx.fillStyle = '#27272a';
+        ctx.beginPath();
+        ctx.moveTo(256, 92);
+        ctx.lineTo(416, 160);
+        ctx.lineTo(256, 228);
+        ctx.lineTo(96, 160);
+        ctx.closePath();
+        ctx.fill();
+
+        // الوجه الأيسر للكعبة المشرفة
+        ctx.fillStyle = '#18181b';
+        ctx.beginPath();
+        ctx.moveTo(96, 160);
+        ctx.lineTo(256, 228);
+        ctx.lineTo(256, 418);
+        ctx.lineTo(96, 350);
+        ctx.closePath();
+        ctx.fill();
+
+        // الوجه الأيمن للكعبة المشرفة
+        ctx.fillStyle = '#09090b';
+        ctx.beginPath();
+        ctx.moveTo(256, 228);
+        ctx.lineTo(416, 160);
+        ctx.lineTo(416, 350);
+        ctx.lineTo(256, 418);
+        ctx.closePath();
+        ctx.fill();
+
+        // حزام الكعبة الذهبي (الأيسر)
+        ctx.fillStyle = '#fbbf24';
+        ctx.beginPath();
+        ctx.moveTo(96, 194);
+        ctx.lineTo(256, 262);
+        ctx.lineTo(256, 292);
+        ctx.lineTo(96, 224);
+        ctx.closePath();
+        ctx.fill();
+
+        // حزام الكعبة الذهبي (الأيمن)
+        ctx.fillStyle = '#f59e0b';
+        ctx.beginPath();
+        ctx.moveTo(256, 262);
+        ctx.lineTo(416, 194);
+        ctx.lineTo(416, 224);
+        ctx.lineTo(256, 292);
+        ctx.closePath();
+        ctx.fill();
+
+        // باب الكعبة المشرفة الذهبي
+        ctx.fillStyle = '#fde047';
+        ctx.beginPath();
+        ctx.moveTo(300, 294);
+        ctx.lineTo(352, 272);
+        ctx.lineTo(352, 376);
+        ctx.lineTo(300, 398);
+        ctx.closePath();
+        ctx.fill();
+
+        // قوس الشاذروان / صحن المطاف الذهبي أسفل الكعبة
+        ctx.strokeStyle = '#fde68a';
+        ctx.lineWidth = 12;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(136, 386);
+        ctx.quadraticCurveTo(256, 452, 376, 386);
+        ctx.stroke();
+
+        const link = document.createElement('a');
+        link.download = 'kaaba-salah-tracker-icon.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('🕋 تم تحميل أيقونة بيت الله الحرام بنجاح', 'success');
+      } catch (err) {
+        console.warn('Icon export error:', err);
+        showToast('تعذر تحميل الأيقونة في هذا المتصفح', 'warning');
+      }
+    }
+
+    // تم نقل تعريف التطبيق إلى manifest.json ثابت بجوار الصفحة.
+
+    function buildShareableReportText() {
+      const { title, subtitle } = formatArabicDate(appState.selectedDate);
+      const famStats = getFamilyDayStats(appState.selectedDate);
+      const lines = [
+        `🕋 ملخص متابعة صلاة الأسرة — ${title} (${subtitle})`,
+        `📊 نسبة إنجاز الأسرة: ${famStats.percentage}% | ✨ حسنات اليوم: ${famStats.totalPoints} حسنة (27 حسنة/صلاة)`,
+        '-----------------------------------'
+      ];
+
+      famStats.perChild.forEach(({ child, stats }) => {
+        const prayerSummary = PRAYERS.map((p) => {
+          const st = getPrayerStatus(appState.selectedDate, child.id, p.id);
+          return `${p.name}: ${PRAYER_STATUSES[st].shortLabel}`;
+        }).join(' | ');
+
+        lines.push(`${child.icon} ${child.name} (${stats.percentage}% - ${stats.points} حسنة اليوم | الإجمالي: ${stats.totalAllTimeHasanat} حسنة):`);
+        lines.push(`   ${prayerSummary}`);
+      });
+
+      return lines.join('\n');
+    }
+
+    function copyTextToClipboard(text) {
+      try {
+        const tempArea = document.createElement('textarea');
+        tempArea.value = text;
+        tempArea.setAttribute('readonly', '');
+        tempArea.style.position = 'absolute';
+        tempArea.style.left = '-9999px';
+        document.body.appendChild(tempArea);
+        tempArea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(tempArea);
+        if (successful) {
+          showToast('تم نسخ ملخص اليوم إلى الحافظة', 'success');
+        } else {
+          showToast('تعذر النسخ التلقائي، يمكنك تحديد النص ونسخه', 'warning');
+        }
+      } catch (err) {
+        showToast('تعذر النسخ إلى الحافظة في هذا المتصفح', 'warning');
+      }
+    }
+
+    function updateThemeIcon(isDark) {
+      const btn = document.getElementById('btnThemeToggle');
+      if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+    }
+
+    function loadInitialState() {
+      appState.selectedDate = getTodayISO();
+      const savedChildren = safeStorageGet(STORAGE_KEYS.CHILDREN, null);
+      if (Array.isArray(savedChildren) && savedChildren.length === 5) {
+        appState.children = savedChildren;
+      } else {
+        appState.children = getDefaultChildren();
+        safeStorageSet(STORAGE_KEYS.CHILDREN, appState.children);
+      }
+
+      appState.records = safeStorageGet(STORAGE_KEYS.RECORDS, {});
+      appState.phrases = { ...getDefaultPhrases(), ...safeStorageGet(STORAGE_KEYS.PHRASES, {}) };
+      appState.prayerTimes = { ...getDefaultPrayerTimes(), ...safeStorageGet(STORAGE_KEYS.PRAYER_TIMES, {}) };
+      appState.recordedAudioDataUrl = safeStorageGet(STORAGE_KEYS.RECORDED_AUDIO, null);
+
+      const savedAuto = safeStorageGet(STORAGE_KEYS.AUTO_REMINDER, null);
+      if (savedAuto && typeof savedAuto === 'object') {
+        appState.autoReminder = {
+          enabled: savedAuto.enabled !== undefined ? Boolean(savedAuto.enabled) : true,
+          intervalMinutes: Number(savedAuto.intervalMinutes) || 0,
+          lastTriggeredAt: Date.now(),
+          lastPrayerAlarmKey: savedAuto.lastPrayerAlarmKey || ''
+        };
+      } else {
+        appState.autoReminder = { enabled: true, intervalMinutes: 0, lastTriggeredAt: Date.now(), lastPrayerAlarmKey: '' };
+      }
+
+      const savedTheme = safeStorageGet(STORAGE_KEYS.THEME, null);
+      const isDark = savedTheme === 'dark';
+      document.documentElement.classList.toggle('dark', isDark);
+      updateThemeIcon(isDark);
+    }
+
+    // تشغيل التطبيق عند اكتمال تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', () => {
+      // تسجيل Service Worker لدعم تثبيت التطبيق وتشغيل هيكله الأساسي دون اتصال.
+      if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+        navigator.serviceWorker.register('./sw.js').catch((err) => {
+          console.warn('Service Worker registration failed:', err);
+        });
+      }
+      loadInitialState();
+      bindGlobalEvents();
+      initSpeechSynthesis();
+      initAutoReminderTimer();
+      renderAll();
+    });
+  </script>
+</body>
+</html>
